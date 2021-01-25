@@ -47,25 +47,17 @@ public class routeController {
 
 	public static Scene schedule_scene;
 
-	@FXML
-	Button add = new Button(); 	
-	/*@FXML	
+	/*@FXML
 	Button ticket = new Button();*/
 	@FXML
 	Button admin = new Button();
-	@FXML
-	Button schedule = new Button();
 	@FXML
 	Button bus = new Button();
 	@FXML
 	Button settings = new Button();
 	@FXML
 	Button logout = new Button();
-	@FXML
-	Button create = new Button();
-	@FXML
-	Button btn_booking = new Button();
-	
+
 
 	@FXML
 	TextField search = new TextField();
@@ -172,10 +164,7 @@ public class routeController {
 
 	@FXML	
 	public void Routing (ActionEvent e) {
-		if(e.getSource() == add){
-			checker = 1;
-			tele.changeTo(add, "AddRoute.fxml");	
-		} else if(e.getSource() == logout){
+		if(e.getSource() == logout){
 			Parent root;
 			Stage stage;
 
@@ -193,19 +182,10 @@ public class routeController {
 			checker = 1;
 			tele.changeTo(bus, "bus.fxml");
 
-		} else if(e.getSource() == schedule){
-			checker = 1;
-			tele.changeTo(schedule, "schedule.fxml");
-
 		} else if(e.getSource() == settings){
 			checker = 1;
 			tele.changeTo(settings, "Settings.fxml");
-		} else if(e.getSource() == btn_booking){
-			checker = 1;
-			tele.changeTo(btn_booking, "booking_add.fxml");
-			//owner o = new owner();
-			//o.start();
-		}	
+		} 	
 
 	}
 
