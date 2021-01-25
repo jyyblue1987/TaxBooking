@@ -2,11 +2,17 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import services.DataAccess;
 import services.Teleportation;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -33,5 +39,42 @@ public class BookingAddController {
 	public void Routing (ActionEvent e) throws Exception {
 		tele.changeTo(home, "route.fxml");
 	}
+
+	@FXML
+	public void onSubmit (ActionEvent e) throws Exception {
+		Parent root;
+
+		String fxml = "/fxml/booking_confirm.fxml";
+
+		try {
+			FXMLLoader loader = new FXMLLoader();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Confirmation");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			loader.setLocation(getClass().getResource(fxml));
+			root = loader.load();
+
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
+
+			dialogStage.setScene(scene);
+			dialogStage.showAndWait();
+
+			BookingConfirmController controller = loader.getController();
+
+			if( controller.isOkClicked() )
+			{
+				boolean isOK = false;
+			}
+
+
+
+		} catch(Exception exp){
+			System.out.println(exp);
+		}
+
+	}
+
 
 }
