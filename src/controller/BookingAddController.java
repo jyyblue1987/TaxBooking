@@ -17,6 +17,7 @@ import services.Teleportation;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 // database
@@ -62,6 +63,8 @@ public class BookingAddController {
 
 	@FXML
 	private void initialize(){
+		dtDeparture.setValue(LocalDate.now());
+		dtReturn.setValue(LocalDate.now());
 	}
 
 
@@ -115,7 +118,16 @@ public class BookingAddController {
 
 			if( controller.isOkClicked() )
 			{
-				boolean isOK = false;
+				txtName.setText("");
+				txtPhone.setText("");
+				txtEmail.setText("");
+				txtAddress.setText("");
+				txtCity.setText("");
+				txtCardNumber.setText("");
+				txtCode.setText("");
+				dtDeparture.setValue(LocalDate.now());
+				dtReturn.setValue(LocalDate.now());
+				txtBusID.setText("");
 			}
 
 

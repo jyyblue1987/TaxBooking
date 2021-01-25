@@ -2,13 +2,17 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Booking;
+import services.DataAccess;
 import services.Teleportation;
+
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 // database
 
@@ -50,27 +54,23 @@ public class BookingConfirmController {
 	@FXML
 	private Label txtBusID = new Label();
 
+	@FXML
+	private Label txtTotalCost = new Label();
+
+	@FXML
+	private Label txtTotalFees = new Label();
+
 	private boolean okClicked = false;
 
 	private Stage dialogStage;
 
+	private float m_fCosts = 0;
+	private float m_fFees = 0;
+
 
 	@FXML
 	private void initialize(){
-	}
-
-
-	/*
-	routes home button to admin section
-	*/
-	@FXML
-	public void onSave(ActionEvent e) throws Exception {
-		dialogStage.close();
-	}
-
-	@FXML
-	public void onCancel(ActionEvent e) throws Exception {
-		dialogStage.close();
+		okClicked = false;
 	}
 
 	public void setDialogStage(Stage dialogStage) {
@@ -88,7 +88,69 @@ public class BookingConfirmController {
 		txtDeparture.setText(booking.departure);
 		txtReturn.setText(booking.return_date);
 		txtBusID.setText(booking.bus_id);
+
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			Date firstDate = sdf.parse(booking.departure);
+			Date secondDate = sdf.parse(booking.return_date);
+
+			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+			m_fCosts = diff * 50;
+			m_fFees = m_fCosts * 0.1f;
+
+			txtTotalCost.setText(m_fCosts + "$");
+			txtTotalFees.setText(m_fFees + "$");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
 	}
+
+	/*
+	routes home button to admin section
+	*/
+	@FXML
+	public void onSave(ActionEvent e) throws Exception {
+		DataAccess da=new DataAccess();
+
+		String sql = String.format("INSERT INTO booking_history (name, phone, email, address, city, card_number, card_code, departure, `return`, bus_id, costs, fees) " +
+				"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%.1f,%.1f)",
+				txtName.getText(),
+				txtPhone.getText(),
+				txtEmail.getText(),
+				txtAddress.getText(),
+				txtCity.getText(),
+				txtCardNumber.getText(),
+				txtCode.getText(),
+				txtDeparture.getText(),
+				txtReturn.getText(),
+				txtBusID.getText(),
+				m_fCosts, m_fFees
+				);
+		try {
+			da.updateDB(sql);
+			da.close();
+
+			tele.pop("Inserted!!!");
+			okClicked = true;
+
+			dialogStage.close();
+		} catch(SQLException a){
+			tele.pop("Error: Please contact developers");
+		}
+
+
+	}
+
+	@FXML
+	public void onCancel(ActionEvent e) throws Exception {
+		dialogStage.close();
+	}
+
+
 
 	public boolean isOkClicked() {
 		return okClicked;
