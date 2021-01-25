@@ -106,6 +106,8 @@ public class BookingAddController {
 					txtCity.getText(),
 					txtCardNumber.getText(),
 					txtCode.getText(),
+					"",
+					"",
 					dtDeparture.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 					dtReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 					txtBusID.getText()

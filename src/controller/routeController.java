@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
 import javafx.event.EventHandler;
 
+import model.Booking;
 import services.Teleportation;
 import services.DataAccess;
 import services.routeModel;
@@ -70,18 +71,31 @@ public class routeController {
 	TextField search = new TextField();
 
 	@FXML
-	private TableView<routeModel> table = new TableView<>();
+	private TableView<Booking> table = new TableView<>();
 
 	@FXML
-	private TableColumn<routeModel,String> to = new TableColumn<>();
+	private TableColumn<routeModel,String> name = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> from = new TableColumn<>();
+	private TableColumn<routeModel,String> phone = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> fare = new TableColumn<>();
+	private TableColumn<routeModel,String> email = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> seat = new TableColumn<>();
+	private TableColumn<routeModel,String> address = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> time = new TableColumn<>();
+	private TableColumn<routeModel,String> city = new TableColumn<>();
+	@FXML
+	private TableColumn<routeModel,String> bus_id = new TableColumn<>();
+	@FXML
+	private TableColumn<routeModel,String> bus_name = new TableColumn<>();
+	@FXML
+	private TableColumn<routeModel,String> capacity = new TableColumn<>();
+
+
+	@FXML
+	private TableColumn<routeModel,String> departure = new TableColumn<>();
+	@FXML
+	private TableColumn<routeModel,String> return1 = new TableColumn<>();
+
 
 	/*
 	checks when thread will stop
@@ -90,13 +104,18 @@ public class routeController {
 
 	@FXML
 	private void initialize() {
-		to.setCellValueFactory(new PropertyValueFactory<>("to"));
-		from.setCellValueFactory(new PropertyValueFactory<>("from"));
-		fare.setCellValueFactory(new PropertyValueFactory<>("fare"));
-		seat.setCellValueFactory(new PropertyValueFactory<>("seat"));
-		time.setCellValueFactory(new PropertyValueFactory<>("time"));
+		name.setCellValueFactory(new PropertyValueFactory<>("name"));
+		phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		email.setCellValueFactory(new PropertyValueFactory<>("email"));
+		address.setCellValueFactory(new PropertyValueFactory<>("address"));
+		city.setCellValueFactory(new PropertyValueFactory<>("city"));
+		bus_name.setCellValueFactory(new PropertyValueFactory<>("bus_name"));
+		bus_id.setCellValueFactory(new PropertyValueFactory<>("bus_id"));
+		capacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+		departure.setCellValueFactory(new PropertyValueFactory<>("departure"));
+		return1.setCellValueFactory(new PropertyValueFactory<>("return_date"));
 
-		table.setItems(getRoute());
+		table.setItems(getBookingHisotry());
 
 
 		/*
@@ -108,37 +127,20 @@ public class routeController {
 			public void run(){
 				while (checker != 1) {
 					
-					ObservableList<routeModel> routes = FXCollections.observableArrayList();
-					routes = getRoute();
+					ObservableList<Booking> history = FXCollections.observableArrayList();
+					history = getBookingHisotry();
 
-					table.setItems(routes);
+					table.setItems(history);
 
-
-					/*	
-					checks if the table is empty
-					if empty then a button will come to refresh the page
-					calls get() function
-					*/
-
-					try {
-						if(routes.isEmpty() && search.getText().equals("") ){
-							create.setDisable(false);
-
-						} else {
-							create.setDisable(true);
-						}
-					} catch(Exception exp){
-
-					} 
 
 					/*
 					if the searchbox is filled then the table will update accordingly
 					*/ 
-					if (routes.isEmpty() == false) {
+					if (history.isEmpty() == false) {
 						if (search.getText().equals("") == false) {
 							updateTable();
 						} else {
-							table.setItems(routes);
+							table.setItems(history);
 						}						
 					}
 
@@ -159,35 +161,6 @@ public class routeController {
 		table.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent t) {
-				if (t.getClickCount() == 2) {
-					if (table.getSelectionModel().getSelectedItem() != null) {
-
-						schedule_to = table.getSelectionModel().getSelectedItem().getTo();
-						schedule_from = table.getSelectionModel().getSelectedItem().getFrom();
-						daily_schedule_id = table.getSelectionModel().getSelectedItem().getId();
-						schedule_fare = table.getSelectionModel().getSelectedItem().getFare();
-
-						try {
-							Parent root = null;
-							Stage stage = null;
-							checker = 1;
-
-							stage = (Stage) table.getScene().getWindow();
-							FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Ticket.fxml"));
-							root = (Parent) fxmlLoader.load();
-							TicketController myController = (TicketController) fxmlLoader.getController();
-							Scene scene = new Scene(root,1280,720);
-
-							myController.setScene(scene);
-
-							scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
-							stage.setScene(scene);	
-
-						} catch(Exception e) {
-
-						}
-					}
-				}
 			}
 		});
 	}
@@ -241,50 +214,31 @@ public class routeController {
 	geta all the routes from database and returns observable data for table 
 	another thread calls this function periodically to check if any update occured in the table
 	*/
-	public ObservableList<routeModel> getRoute(){
-		ObservableList<routeModel> routes = FXCollections.observableArrayList();
+	public ObservableList<Booking> getBookingHisotry(){
+		ObservableList<Booking> routes = FXCollections.observableArrayList();
 
 		DataAccess da=new DataAccess();
 		ResultSet rs=null;
-		ResultSet seats=null;
 
-		String q=new String("SELECT * FROM daily_schedule join schedule on schedule.schedule_id = daily_schedule.schedule_id join routes on schedule.route_id = routes.route_id join buses on schedule.bus_id = buses.bus_id where daily_schedule.active = 1 and daily_schedule.date = ");
+		String q = new String("SELECT a.*, b.* FROM booking_history as a left join buses as b on a.bus_id = b.model group by a.id");
 
-		String nm="SELECT daily_schedule_id, COUNT( * ) AS tickets FROM  `daily_ticket` WHERE active =1 GROUP BY  `daily_schedule_id`";
-
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String star = "'";
-		rs=da.getData(q+star+dateFormat.format(date)+star);
-		seats = da.getData(nm); 
-
+		rs=da.getData(q);
 
 		try {
 			while(rs.next()){
-				String id = rs.getString("daily_schedule_id");
-				String destination = rs.getString("destination");
-				String departs = rs.getString("departs");
-				String fare = rs.getString("fare");
-				String time = rs.getString("time");
-				int seat = 40;
+				String name = rs.getString("name");
+				String phone = rs.getString("name");
+				String email = rs.getString("name");
+				String address = rs.getString("name");
+				String city = rs.getString("name");
+				String bus_id = rs.getString("name");
+				String bus_name = rs.getString("name");
+				String capacity = rs.getString("name");
+				String departure = rs.getString("departure");
+				String return1 = rs.getString("return");
 
-				/*
-				matches number of seats to its schedule	
-				*/				
-				while(seats.next()){
-					if(seats.getString("daily_schedule_id").equals(id)){
-						seat = 40 - seats.getInt("tickets");
-						break;
-					} 
-				}
 
-				seats.beforeFirst();		
-				int i = rs.getInt("daily_schedule_id");
-
-				String str = Integer.toString(seat);
-
-				routes.add(new routeModel(i,destination,departs,fare,str,time));
+				routes.add(new Booking(name, phone, email, address, city, "", "", departure, return1, bus_id, bus_name, capacity));
 			}
 
 		} catch(SQLException a){
@@ -304,37 +258,33 @@ public class routeController {
 		return routes;
 	}
 
-	/*
-	this function fresh starts today's schedule. 	
-	*/
-	public void get(){
-		String q = "insert into daily_schedule(schedule_id, date) select schedule_id,curdate() from schedule where active = 1";
-		DataAccess db = new DataAccess();
-		db.updateDB(q);
-		table.setItems(getRoute());
-
-		try {
-			db.close();
-		} catch(Exception exp){
-
-		}
-	}
-
 
 	/*
 	updates table according to user input	
 	*/
 	public void updateTable(){
-		ObservableList<routeModel> routes = FXCollections.observableArrayList();
+		ObservableList<Booking> history = FXCollections.observableArrayList();
 
-		for (routeModel t : table.getItems()) {
-			if (like(t.getTo(),search.getText()) || like(t.getFrom(),search.getText()) || like(t.getTime(),search.getText())){
-				routes.add(new routeModel(t.getId(),t.getTo(),t.getFrom(),t.getFare(),t.getSeat(),t.getTime()));
+		for (Booking t : table.getItems()) {
+			if (
+					like(t.name, search.getText()) ||
+							like(t.phone, search.getText()) ||
+							like(t.email, search.getText()) ||
+							like(t.address, search.getText()) ||
+							like(t.city, search.getText()) ||
+							like(t.departure, search.getText()) ||
+							like(t.return_date, search.getText()) ||
+							like(t.bus_id, search.getText()) ||
+							like(t.bus_name, search.getText()) ||
+							like(t.capacity, search.getText())
+			)
+			{
+				history.add(new Booking(t.name, t.phone, t.email, t.address, t.city, t.card_number, t.card_code, t.departure, t.return_date, t.bus_id, t.bus_name, t.capacity));
 			}
 
 		}
 
-		table.setItems(routes);
+		table.setItems(history);
 	}
 
 
