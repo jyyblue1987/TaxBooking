@@ -37,6 +37,9 @@ public class busController {
 	TextField getModel = new TextField();
 
 	@FXML
+	TextField getCapacity = new TextField();
+
+	@FXML
 	TextField search = new TextField();
 	
 
@@ -49,8 +52,6 @@ public class busController {
 	private TableColumn<buses,String> reg = new TableColumn<>();
 	@FXML
 	private TableColumn<buses,String> trips = new TableColumn<>();
-	@FXML
-	private TableColumn<buses,String> earning = new TableColumn<>();
 
 	int check = 0;
 	int refresh = 0;
@@ -61,7 +62,6 @@ public class busController {
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));
 		reg.setCellValueFactory(new PropertyValueFactory<>("reg"));
 		trips.setCellValueFactory(new PropertyValueFactory<>("trips"));
-		earning.setCellValueFactory(new PropertyValueFactory<>("earning"));
 
 		table.setItems(getBus());
 
@@ -135,9 +135,10 @@ public class busController {
 	public void formSubmission(ActionEvent e){
 		if(getName.getText().equals("") == false){
 			if(getModel.getText().equals("") == false){
-				InsertData(getName.getText(), getModel.getText());
+				InsertData(getName.getText(), getModel.getText(), getCapacity.getText());
 				getName.setText("");
 				getModel.setText("");
+				getCapacity.setText("");
 			} else {
 				tele.pop("Model is required!");	
 			}
@@ -147,11 +148,11 @@ public class busController {
 	}
 
 
-	public void InsertData(String n,String m){
+	public void InsertData(String bus_name, String model, String capacity){
 		DataAccess da=new DataAccess();
-		String q="insert into buses(bus_name,model) values";
+		String q="insert into buses(bus_name,model,capacity) values";
 		try {
-			da.updateDB(q+"('"+n+"','"+m+"')");			
+			da.updateDB(q + String.format("('%s', '%s', '%s')", bus_name, model, capacity));
 			refresh = 1;
 			da.close();
 		} catch(SQLException a){
@@ -174,9 +175,10 @@ public class busController {
 
 		try{
 			while (rs.next()) {
-				String name = rs.getString("bus_name");				
+				String name = rs.getString("bus_name");
 				String model = rs.getString("model");
-				bus.add(new buses(rs.getInt("bus_id"),name, model, "20", "15000"));				
+				String capacity = rs.getString("capacity");
+				bus.add(new buses(rs.getInt("bus_id"),name, model, capacity, "15000"));
 			}
 		} catch(SQLException e){
 			tele.pop("Error: Please contact developers");
