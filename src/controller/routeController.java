@@ -2,7 +2,6 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,17 +14,12 @@ import javafx.event.EventHandler;
 import model.Booking;
 import services.Teleportation;
 import services.DataAccess;
-import services.routeModel;
 
 //imports the main login file to 
 // get the login info
 import services.login; 
 
 // date
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 
 // database
@@ -66,27 +60,23 @@ public class routeController {
 	private TableView<Booking> table = new TableView<>();
 
 	@FXML
-	private TableColumn<routeModel,String> name = new TableColumn<>();
+	private TableColumn<Booking,String> name = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> phone = new TableColumn<>();
+	private TableColumn<Booking,String> phone = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> email = new TableColumn<>();
+	private TableColumn<Booking,String> email = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> address = new TableColumn<>();
+	private TableColumn<Booking,String> bus_id = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> city = new TableColumn<>();
+	private TableColumn<Booking,String> bus_name = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> bus_id = new TableColumn<>();
-	@FXML
-	private TableColumn<routeModel,String> bus_name = new TableColumn<>();
-	@FXML
-	private TableColumn<routeModel,String> capacity = new TableColumn<>();
+	private TableColumn<Booking,String> capacity = new TableColumn<>();
 
 
 	@FXML
-	private TableColumn<routeModel,String> departure = new TableColumn<>();
+	private TableColumn<Booking,String> departure = new TableColumn<>();
 	@FXML
-	private TableColumn<routeModel,String> return1 = new TableColumn<>();
+	private TableColumn<Booking,String> return1 = new TableColumn<>();
 
 
 	/*
@@ -99,8 +89,6 @@ public class routeController {
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));
 		phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 		email.setCellValueFactory(new PropertyValueFactory<>("email"));
-		address.setCellValueFactory(new PropertyValueFactory<>("address"));
-		city.setCellValueFactory(new PropertyValueFactory<>("city"));
 		bus_name.setCellValueFactory(new PropertyValueFactory<>("bus_name"));
 		bus_id.setCellValueFactory(new PropertyValueFactory<>("bus_id"));
 		capacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
@@ -185,7 +173,7 @@ public class routeController {
 		} else if(e.getSource() == settings){
 			checker = 1;
 			tele.changeTo(settings, "Settings.fxml");
-		} 	
+		}
 
 	}
 
@@ -207,18 +195,15 @@ public class routeController {
 		try {
 			while(rs.next()){
 				String name = rs.getString("name");
-				String phone = rs.getString("name");
-				String email = rs.getString("name");
-				String address = rs.getString("name");
-				String city = rs.getString("name");
-				String bus_id = rs.getString("name");
-				String bus_name = rs.getString("name");
-				String capacity = rs.getString("name");
+				String phone = rs.getString("phone");
+				String email = rs.getString("email");
+				String bus_id = rs.getString("bus_id");
+				String bus_name = rs.getString("bus_name");
+				String capacity = rs.getString("capacity");
 				String departure = rs.getString("departure");
 				String return1 = rs.getString("return");
 
-
-				routes.add(new Booking(name, phone, email, address, city, "", "", departure, return1, bus_id, bus_name, capacity));
+				routes.add(new Booking(name, phone, email, "", "", departure, return1, bus_id, bus_name, capacity));
 			}
 
 		} catch(SQLException a){
@@ -250,8 +235,6 @@ public class routeController {
 					like(t.name, search.getText()) ||
 							like(t.phone, search.getText()) ||
 							like(t.email, search.getText()) ||
-							like(t.address, search.getText()) ||
-							like(t.city, search.getText()) ||
 							like(t.departure, search.getText()) ||
 							like(t.return_date, search.getText()) ||
 							like(t.bus_id, search.getText()) ||
@@ -259,7 +242,7 @@ public class routeController {
 							like(t.capacity, search.getText())
 			)
 			{
-				history.add(new Booking(t.name, t.phone, t.email, t.address, t.city, t.card_number, t.card_code, t.departure, t.return_date, t.bus_id, t.bus_name, t.capacity));
+				history.add(new Booking(t.name, t.phone, t.email, t.card_number, t.card_code, t.departure, t.return_date, t.bus_id, t.bus_name, t.capacity));
 			}
 
 		}

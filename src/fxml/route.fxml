@@ -26,8 +26,6 @@
             <TableColumn fx:id="name" minWidth="0.0" prefWidth="139.0" text="Name" />
             <TableColumn fx:id="phone" prefWidth="129.0" text="Phone" />
             <TableColumn fx:id="email" minWidth="0.0" prefWidth="139.0" text="Email" />
-            <TableColumn fx:id="address" prefWidth="156.0" text="Address" />
-            <TableColumn fx:id="city" prefWidth="147.0" text="City" />
             <TableColumn fx:id="bus_name" prefWidth="75.0" text="Bus Name" />
             <TableColumn fx:id="bus_id" prefWidth="75.0" text="Bus ID" />
             <TableColumn fx:id="capacity" prefWidth="75.0" text="Capacity" />

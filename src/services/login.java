@@ -49,7 +49,7 @@ public class login extends Application
 
         stackPane_ob.getStylesheets().add("css/app.css");
 
-        Label t = new Label("Transportation management");
+        Label t = new Label("Bus Booking System");
         PasswordField password = new PasswordField();
         TextField id=new TextField();
         Button login=new Button("Login");

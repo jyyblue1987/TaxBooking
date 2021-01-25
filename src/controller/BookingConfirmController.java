@@ -33,11 +33,6 @@ public class BookingConfirmController {
 	@FXML
 	private TextField txtEmail = new TextField();
 
-	@FXML
-	private TextField txtAddress = new TextField();
-
-	@FXML
-	private TextField txtCity = new TextField();
 
 	@FXML
 	private TextField txtCardNumber = new TextField();
@@ -81,8 +76,6 @@ public class BookingConfirmController {
 		txtName.setText(booking.name);
 		txtPhone.setText(booking.phone);
 		txtEmail.setText(booking.email);
-		txtAddress.setText(booking.address);
-		txtCity.setText(booking.city);
 		txtCardNumber.setText(booking.card_number);
 		txtCode.setText(booking.card_code);
 		txtDeparture.setText(booking.departure);
@@ -119,13 +112,11 @@ public class BookingConfirmController {
 	public void onSave(ActionEvent e) throws Exception {
 		DataAccess da=new DataAccess();
 
-		String sql = String.format("INSERT INTO booking_history (name, phone, email, address, city, card_number, card_code, departure, `return`, bus_id, costs, fees) " +
-				"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%.1f,%.1f)",
+		String sql = String.format("INSERT INTO booking_history (name, phone, email, card_number, card_code, departure, `return`, bus_id, costs, fees) " +
+				"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s',%.1f,%.1f)",
 				txtName.getText(),
 				txtPhone.getText(),
 				txtEmail.getText(),
-				txtAddress.getText(),
-				txtCity.getText(),
 				txtCardNumber.getText(),
 				txtCode.getText(),
 				txtDeparture.getText(),

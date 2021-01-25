@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Booking;
+import services.Admins;
 import services.DataAccess;
 import services.Teleportation;
 
@@ -40,12 +41,6 @@ public class BookingAddController {
 	private TextField txtEmail = new TextField();
 
 	@FXML
-	private TextField txtAddress = new TextField();
-
-	@FXML
-	private TextField txtCity = new TextField();
-
-	@FXML
 	private TextField txtCardNumber = new TextField();
 
 	@FXML
@@ -56,10 +51,6 @@ public class BookingAddController {
 
 	@FXML
 	private DatePicker dtReturn = new DatePicker();
-
-	@FXML
-	private TextField txtBusID = new TextField();
-
 
 	@FXML
 	private void initialize(){
@@ -97,20 +88,34 @@ public class BookingAddController {
 
 			dialogStage.setScene(scene);
 
-			BookingConfirmController controller = loader.getController();
+			String bus_id = "";
+            DataAccess da=new DataAccess();
+            ResultSet rs = null;
+
+            String query = "SELECT * from buses where active = 1 limit 1";
+
+            rs = da.getData(query);
+
+            try {
+                if (rs.next()) {
+                    bus_id = rs.getString("model");
+                }
+                da.close();
+            } catch(SQLException q){
+                tele.pop("Error: Please contact developers");
+            }
+
+            BookingConfirmController controller = loader.getController();
 			Booking booking = new Booking(
 					txtName.getText(),
 					txtPhone.getText(),
 					txtEmail.getText(),
-					txtAddress.getText(),
-					txtCity.getText(),
 					txtCardNumber.getText(),
 					txtCode.getText(),
-					"",
-					"",
 					dtDeparture.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 					dtReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-					txtBusID.getText()
+                    bus_id,
+                    "", ""
 			);
 
 			controller.initBooking(booking);
@@ -136,13 +141,10 @@ public class BookingAddController {
 		txtName.setText("");
 		txtPhone.setText("");
 		txtEmail.setText("");
-		txtAddress.setText("");
-		txtCity.setText("");
 		txtCardNumber.setText("");
 		txtCode.setText("");
 		dtDeparture.setValue(LocalDate.now());
 		dtReturn.setValue(LocalDate.now());
-		txtBusID.setText("");
 	}
 
 }

@@ -27,7 +27,7 @@
   <Label layoutX="936.0" layoutY="118.0" prefHeight="36.0" prefWidth="231.0" text="Add new Bus" />
   
   <TextField fx:id="getName" layoutX="881.0" layoutY="199.0" prefHeight="38.0" prefWidth="310.0" promptText="Name" />
-  <TextField fx:id="getModel" layoutX="881.0" layoutY="273.0" prefHeight="38.0" prefWidth="310.0" promptText="Registration ID" />
+  <TextField fx:id="getModel" layoutX="881.0" layoutY="273.0" prefHeight="38.0" prefWidth="310.0" promptText="Bus ID" />
 
   <Button fx:id="submit" layoutX="1055.0" layoutY="450.0" mnemonicParsing="false" onAction="#formSubmission" prefHeight="44.0" prefWidth="142.0" text="Submit" />
       <TextField fx:id="getCapacity" layoutX="881.0" layoutY="348.0" prefHeight="38.0" prefWidth="310.0" promptText="Capacity" />

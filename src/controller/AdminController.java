@@ -164,7 +164,7 @@ public class AdminController  {
 		DataAccess da=new DataAccess();
 		ResultSet rs=null;
 
-		String query = "SELECT * from admins where active = 1";
+		String query = "SELECT * from admins where active = 1 and type = 2";
 
 		rs = da.getData(query);
 
@@ -177,6 +177,8 @@ public class AdminController  {
 
 				admin.add(new Admins(id,name,phone,address));
 			}
+
+			da.close();
 		} catch(SQLException q){
 			tele.pop("Error: Please contact developers");
 		}
@@ -211,9 +213,9 @@ public class AdminController  {
 	*/
 	public void InsertData(String n,String m,String o,String p){
 		DataAccess da=new DataAccess();
-		String q="insert into admins(admin_name,password,address,phone) values";
+		String q="insert into admins(admin_name,password,address,phone,type) values";
 		try {
-			da.updateDB(q+"('"+n+"','"+m+"','"+o+"','"+p+"')");			
+			da.updateDB(q+"('"+n+"','"+m+"','"+o+"','"+p+"',2)");
 			refresh = 1;
 			da.close();
 		} catch(SQLException a){

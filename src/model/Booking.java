@@ -4,8 +4,6 @@ public class Booking {
     public String name;
     public String phone;
     public String email;
-    public String address;
-    public String city;
     public String card_number;
     public String card_code;
     public String departure;
@@ -13,12 +11,10 @@ public class Booking {
     public String bus_id;
     public String bus_name;
     public String capacity;
-    public Booking(String name, String phone, String email, String address, String city, String card_number, String card_code, String departure, String return_date, String bus_id, String bus_name, String capacity) {
+    public Booking(String name, String phone, String email, String card_number, String card_code, String departure, String return_date, String bus_id, String bus_name, String capacity) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
-        this.city = city;
         this.card_number = card_number;
         this.card_code = card_code;
         this.departure = departure;
@@ -36,12 +32,6 @@ public class Booking {
     }
     public String getEmail(){
         return email;
-    }
-    public String getAddress(){
-        return address;
-    }
-    public String getCity(){
-        return city;
     }
     public String getDeparture(){
         return departure;
