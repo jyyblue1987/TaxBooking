@@ -27,6 +27,7 @@ public class busController {
 	public static int bus_id;
 	public static String bus_name;
 	public static String bus_reg;
+	public static String bus_capacity;
 
 
 	@FXML
@@ -109,6 +110,7 @@ public class busController {
 						bus_id = table.getSelectionModel().getSelectedItem().getId();
 						bus_name = table.getSelectionModel().getSelectedItem().getName();
 						bus_reg = table.getSelectionModel().getSelectedItem().getReg();
+						bus_capacity = table.getSelectionModel().getSelectedItem().getCapacity();
 
 						check = 1;
 

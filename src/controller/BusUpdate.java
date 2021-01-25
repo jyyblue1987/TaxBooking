@@ -30,8 +30,12 @@ public class BusUpdate {
 	
 	@FXML
 	private TextField name = new TextField();
+
 	@FXML
 	private TextField reg = new TextField();
+
+	@FXML
+	private TextField capacity = new TextField();
 
 
 	@FXML 
@@ -44,10 +48,10 @@ public class BusUpdate {
 
 	@FXML
 	private void initialize(){
-		busController bus = new busController();
-		this.name.setText(bus.bus_name);
-		this.reg.setText(bus.bus_reg);
-	}		
+		this.name.setText(busController.bus_name);
+		this.reg.setText(busController.bus_reg);
+		this.capacity.setText(busController.bus_capacity);
+	}
 
 
 	/*
@@ -65,8 +69,8 @@ public class BusUpdate {
 		busController bus = new busController();
 
 		if (e.getSource() == update) {
-			if (name.getText().equals("") == false && reg.getText().equals("") == false ) {
-				String q = "update buses set bus_name = '"+name.getText()+"', model= '"+reg.getText()+"' where bus_id = "+bus.bus_id;				
+			if (name.getText().equals("") == false && reg.getText().equals("") == false && capacity.getText().equals("") == false ) {
+				String q = "update buses set bus_name = '"+name.getText()+"', model= '"+reg.getText()+"', capacity= '"+capacity.getText() +"' where bus_id = "+bus.bus_id;
 				//System.out.println(q);
 				da.updateDB(q);
 			} else {

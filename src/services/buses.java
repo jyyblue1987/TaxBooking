@@ -34,6 +34,11 @@ public class buses {
 		return reg;
 	}
 
+	public String getCapacity(){
+		return trips;
+	}
+
+
 	public int getId(){
 		return id;
 	} 
