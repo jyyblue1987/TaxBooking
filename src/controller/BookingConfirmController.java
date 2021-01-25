@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Booking;
 import services.Teleportation;
 
@@ -51,6 +52,9 @@ public class BookingConfirmController {
 
 	private boolean okClicked = false;
 
+	private Stage dialogStage;
+
+
 	@FXML
 	private void initialize(){
 	}
@@ -60,8 +64,17 @@ public class BookingConfirmController {
 	routes home button to admin section
 	*/
 	@FXML
-	public void Routing (ActionEvent e) throws Exception {
-		tele.changeTo(home, "route.fxml");
+	public void onSave(ActionEvent e) throws Exception {
+		dialogStage.close();
+	}
+
+	@FXML
+	public void onCancel(ActionEvent e) throws Exception {
+		dialogStage.close();
+	}
+
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
 	}
 
 	public void initBooking(Booking booking) {

@@ -85,8 +85,8 @@
             <Insets left="20.0" right="20.0" />
          </padding>
       </AnchorPane>
-      <Button layoutX="821.0" layoutY="558.0" mnemonicParsing="false" text="Cancel" />
-      <Button layoutX="920.0" layoutY="558.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="821.0" layoutY="558.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+      <Button layoutX="920.0" layoutY="558.0" mnemonicParsing="false" onAction="#onSave" text="Save" />
       <AnchorPane layoutX="646.0" layoutY="346.0" prefHeight="136.0" prefWidth="350.0">
          <children>
             <Label layoutX="14.0" layoutY="40.0" text="Total Costs" />

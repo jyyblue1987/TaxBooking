@@ -109,6 +109,7 @@ public class BookingAddController {
 			);
 
 			controller.initBooking(booking);
+			controller.setDialogStage(dialogStage);
 
 			dialogStage.showAndWait();
 
