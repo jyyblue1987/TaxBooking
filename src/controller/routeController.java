@@ -63,7 +63,7 @@ public class routeController {
 	@FXML
 	Button create = new Button();
 	@FXML
-	Button statistics = new Button();
+	Button btn_booking = new Button();
 	
 
 	@FXML
@@ -227,9 +227,9 @@ public class routeController {
 		} else if(e.getSource() == settings){
 			checker = 1;
 			tele.changeTo(settings, "Settings.fxml");
-		} else if(e.getSource() == statistics){
+		} else if(e.getSource() == btn_booking){
 			checker = 1;
-			tele.changeTo(statistics, "owner.fxml");
+			tele.changeTo(btn_booking, "booking_add.fxml");
 			//owner o = new owner();
 			//o.start();
 		}	

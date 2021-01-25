@@ -13,7 +13,7 @@
       <Button fx:id="bus" layoutX="165.0" layoutY="2.0" mnemonicParsing="false" onAction="#Routing" prefHeight="84.0" prefWidth="163.0" text="Bus" />
       <Button fx:id="schedule" layoutX="328.0" layoutY="2.0" mnemonicParsing="false" onAction="#Routing" prefHeight="84.0" prefWidth="163.0" text="Booking" />
       <Button fx:id="admin" layoutX="491.0" layoutY="2.0" mnemonicParsing="false" onAction="#Routing" prefHeight="84.0" prefWidth="163.0" text="Customers" />
-      <Button fx:id="statistics" layoutX="650.0" layoutY="2.0" mnemonicParsing="false" onAction="#Routing" prefHeight="84.0" prefWidth="163.0" text="Statistics" />
+      <Button fx:id="btn_booking" layoutX="650.0" layoutY="2.0" mnemonicParsing="false" onAction="#Routing" prefHeight="84.0" prefWidth="163.0" text="Booking" />
 
 
       <Button fx:id="settings" layoutX="954.0" layoutY="2.0" mnemonicParsing="false" onAction="#Routing" prefHeight="84.0" prefWidth="163.0" text="Settings" />
