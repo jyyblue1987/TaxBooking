@@ -31,13 +31,7 @@ public class BookingAddController {
 	*/
 	@FXML
 	public void Routing (ActionEvent e) throws Exception {
-		tele.changeTo(home, "bus.fxml");
+		tele.changeTo(home, "route.fxml");
 	}
 
-
-
-	public void formSubmission(ActionEvent e){
-
-		tele.changeTo(home, "bus.fxml");
-	}
 }
