@@ -54,11 +54,11 @@
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField GridPane.columnIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtName" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtPhone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtAddress" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtCity" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <Label alignment="TOP_CENTER" layoutX="242.0" layoutY="14.0" text="Personal Data" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -72,8 +72,8 @@
             <Label alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" text="Payment" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" />
             <Label layoutX="20.0" layoutY="83.0" text="Card Number" />
             <Label layoutX="20.0" layoutY="147.0" text="CVC Code" />
-            <TextField layoutX="201.0" layoutY="79.0" prefHeight="25.0" prefWidth="310.0" />
-            <TextField layoutX="201.0" layoutY="143.0" prefHeight="25.0" prefWidth="310.0" />
+            <TextField fx:id="txtCardNumber" layoutX="201.0" layoutY="79.0" prefHeight="25.0" prefWidth="310.0" />
+            <TextField fx:id="txtCode" layoutX="201.0" layoutY="143.0" prefHeight="25.0" prefWidth="310.0" />
          </children>
          <padding>
             <Insets left="20.0" right="20.0" />
@@ -84,9 +84,9 @@
             <Label alignment="TOP_CENTER" layoutX="242.0" layoutY="14.0" text="Bus Data" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <Label layoutX="20.0" layoutY="83.0" text="Departure" />
             <Label layoutX="20.0" layoutY="128.0" text="Return" />
-            <DatePicker layoutX="203.0" layoutY="79.0" prefHeight="25.0" prefWidth="296.0" />
-            <DatePicker layoutX="203.0" layoutY="124.0" prefHeight="25.0" prefWidth="296.0" />
-            <TextField layoutX="203.0" layoutY="173.0" prefHeight="25.0" prefWidth="296.0" />
+            <DatePicker fx:id="dtDeparture" layoutX="203.0" layoutY="79.0" prefHeight="25.0" prefWidth="296.0" />
+            <DatePicker fx:id="dtReturn" layoutX="203.0" layoutY="124.0" prefHeight="25.0" prefWidth="296.0" />
+            <TextField fx:id="txtBusID" layoutX="203.0" layoutY="173.0" prefHeight="25.0" prefWidth="296.0" />
             <Label layoutX="20.0" layoutY="177.0" text="Bus ID" />
          </children>
          <padding>
