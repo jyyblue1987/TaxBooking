@@ -95,7 +95,10 @@ public class BookingConfirmController {
 			Date secondDate = sdf.parse(booking.return_date);
 
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS) + 1;
+
+			if( diff < 1 )
+				diff = 1;
 
 			m_fCosts = diff * 50;
 			m_fFees = m_fCosts * 0.1f;

@@ -120,7 +120,7 @@ public class login extends Application
                         try {
                             Parent root = null;
 
-                            root = FXMLLoader.load(getClass().getResource("/fxml/owner.fxml"));
+                            root = FXMLLoader.load(getClass().getResource("/fxml/booking_add.fxml"));
                             Scene scene = new Scene(root,1280,720);
                             scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
                             stage_ob.setScene(scene);

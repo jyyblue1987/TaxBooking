@@ -72,8 +72,8 @@ public class BookingAddController {
 	routes home button to admin section
 	*/
 	@FXML
-	public void Routing (ActionEvent e) throws Exception {
-		tele.changeTo(home, "route.fxml");
+	public void onClear (ActionEvent e) throws Exception {
+		clearInput();
 	}
 
 	@FXML
@@ -118,16 +118,7 @@ public class BookingAddController {
 
 			if( controller.isOkClicked() )
 			{
-				txtName.setText("");
-				txtPhone.setText("");
-				txtEmail.setText("");
-				txtAddress.setText("");
-				txtCity.setText("");
-				txtCardNumber.setText("");
-				txtCode.setText("");
-				dtDeparture.setValue(LocalDate.now());
-				dtReturn.setValue(LocalDate.now());
-				txtBusID.setText("");
+				clearInput();
 			}
 
 
@@ -138,5 +129,18 @@ public class BookingAddController {
 
 	}
 
+
+	private void clearInput() {
+		txtName.setText("");
+		txtPhone.setText("");
+		txtEmail.setText("");
+		txtAddress.setText("");
+		txtCity.setText("");
+		txtCardNumber.setText("");
+		txtCode.setText("");
+		dtDeparture.setValue(LocalDate.now());
+		dtReturn.setValue(LocalDate.now());
+		txtBusID.setText("");
+	}
 
 }
