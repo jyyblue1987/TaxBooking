@@ -83,7 +83,6 @@
             <Label layoutX="14.0" layoutY="25.0" text="Total Costs" />
             <Label layoutX="14.0" layoutY="60.0" text="Total Fees" />
             <Label fx:id="txtTotalCost" layoutX="167.0" layoutY="25.0" text="200.0" />
-            <Label fx:id="txtTotalFees" layoutX="164.0" layoutY="60.0" text="200.0$" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />

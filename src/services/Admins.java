@@ -3,20 +3,20 @@ package services;
 public class Admins {
 	private int id;
 	private String name;
-	private String phone;
+	private String email;
 	private String address;
 
 	public Admins(){
 		this.name = ""; 
 		this.id = 0; 
-		this.phone = ""; 
+		this.email = "";
 		this.address = ""; 
 	}
 
-	public Admins(int id,String name,String phone, String address ){
+	public Admins(int id,String name,String email, String address ){
 		this.name = name; 
 		this.id = id; 
-		this.phone = phone; 
+		this.email = email;
 		this.address = address; 
 	}
 
@@ -29,8 +29,8 @@ public class Admins {
 		return id;
 	}
 
-	public String getPhone(){
-		return phone;
+	public String getEmail(){
+		return email;
 	}
 
 	public String getAddress(){
@@ -47,7 +47,7 @@ public class Admins {
 	}
 
 	public void setPhone(String phone){
-		this.phone = phone; 
+		this.email = email;
 	}
 
 	public void setAddress(String address){

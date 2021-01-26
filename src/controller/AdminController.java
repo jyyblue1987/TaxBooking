@@ -39,7 +39,7 @@ public class AdminController  {
 	public static int admin_id; 
 	public static String admin_name; 
 	public static String admin_address; 
-	public static String admin_phone;
+	public static String admin_email;
 
 	/*
 	table structure
@@ -50,7 +50,7 @@ public class AdminController  {
 	@FXML
 	private TableColumn<Admins,String> name = new TableColumn<>();
 	@FXML
-	private TableColumn<Admins,String> phone = new TableColumn<>();
+	private TableColumn<Admins,String> email = new TableColumn<>();
 	@FXML
 	private TableColumn<Admins,String> address = new TableColumn<>();
 
@@ -60,9 +60,9 @@ public class AdminController  {
 	@FXML
 	private TextField getname = new TextField();
 	@FXML
-	private TextField getaddress = new TextField();
+	private TextField getAddress = new TextField();
 	@FXML
-	private TextField getPhone = new TextField();
+	private TextField getEmail = new TextField();
 	@FXML
 	private PasswordField getPass = new PasswordField();
 	@FXML
@@ -77,7 +77,7 @@ public class AdminController  {
 		initializes table
 		*/
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));
-		phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		email.setCellValueFactory(new PropertyValueFactory<>("email"));
 		address.setCellValueFactory(new PropertyValueFactory<>("address"));
 
 		table.setItems(getAdmin());
@@ -130,7 +130,7 @@ public class AdminController  {
 
 						admin_id = table.getSelectionModel().getSelectedItem().getId();
 						admin_name = table.getSelectionModel().getSelectedItem().getName();
-						admin_phone = table.getSelectionModel().getSelectedItem().getPhone();
+						admin_email = table.getSelectionModel().getSelectedItem().getEmail();
 						admin_address = table.getSelectionModel().getSelectedItem().getAddress();
 						check = 1;	
 						tele.changeTo(home, "AdminUpdate.fxml");
@@ -173,9 +173,9 @@ public class AdminController  {
 				int id = rs.getInt("admin_id");				
 				String name = rs.getString("admin_name");
 				String address = rs.getString("address");
-				String phone = rs.getString("phone");
+				String email = rs.getString("email");
 
-				admin.add(new Admins(id,name,phone,address));
+				admin.add(new Admins(id,name,email,address));
 			}
 
 			da.close();
@@ -194,12 +194,12 @@ public class AdminController  {
 	then  calls insertData() function  
 	*/	
 	public void formSubmission(){
-		if (getname.getText().equals("") == false && getaddress.getText().equals("") == false && getPhone.getText().equals("") == false && getPass.getText().equals("") == false) {
-			InsertData(getname.getText(),getPass.getText(),getaddress.getText(),getPhone.getText());
+		if (getname.getText().equals("") == false && getAddress.getText().equals("") == false && getEmail.getText().equals("") == false && getPass.getText().equals("") == false) {
+			InsertData(getname.getText(),getPass.getText(),getAddress.getText(),getEmail.getText());
 			getname.setText("");
 			getPass.setText("");
-			getaddress.setText("");
-			getPhone.setText("");
+			getAddress.setText("");
+			getEmail.setText("");
 
 			table.setItems(getAdmin());   		// updates the table after a successful insertion 
 		} else {
@@ -213,7 +213,7 @@ public class AdminController  {
 	*/
 	public void InsertData(String n,String m,String o,String p){
 		DataAccess da=new DataAccess();
-		String q="insert into admins(admin_name,password,address,phone,type) values";
+		String q="insert into admins(admin_name,password,address,email,type) values";
 		try {
 			da.updateDB(q+"('"+n+"','"+m+"','"+o+"','"+p+"',2)");
 			refresh = 1;
@@ -230,7 +230,7 @@ public class AdminController  {
 
 		for (Admins b : table.getItems()) {
 			if (like(b.getName(), search.getText())  || like(b.getAddress(), search.getText())){
-				admin.add(new Admins(b.getId(),b.getName(),b.getPhone(),b.getAddress()));
+				admin.add(new Admins(b.getId(),b.getName(),b.getEmail(),b.getAddress()));
 			}
 
 		}

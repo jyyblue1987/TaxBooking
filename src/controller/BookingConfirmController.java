@@ -52,15 +52,12 @@ public class BookingConfirmController {
 	@FXML
 	private Label txtTotalCost = new Label();
 
-	@FXML
-	private Label txtTotalFees = new Label();
 
 	private boolean okClicked = false;
 
 	private Stage dialogStage;
 
 	private float m_fCosts = 0;
-	private float m_fFees = 0;
 
 
 	@FXML
@@ -94,10 +91,8 @@ public class BookingConfirmController {
 				diff = 1;
 
 			m_fCosts = diff * 50;
-			m_fFees = m_fCosts * 0.1f;
 
 			txtTotalCost.setText(m_fCosts + "$");
-			txtTotalFees.setText(m_fFees + "$");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,8 +107,8 @@ public class BookingConfirmController {
 	public void onSave(ActionEvent e) throws Exception {
 		DataAccess da=new DataAccess();
 
-		String sql = String.format("INSERT INTO booking_history (name, phone, email, card_number, card_code, departure, `return`, bus_id, costs, fees) " +
-				"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s',%.1f,%.1f)",
+		String sql = String.format("INSERT INTO booking_history (name, phone, email, card_number, card_code, departure, `return`, bus_id, costs) " +
+				"VALUES ('%s','%s','%s','%s','%s','%s','%s','%s',%.1f)",
 				txtName.getText(),
 				txtPhone.getText(),
 				txtEmail.getText(),
@@ -122,7 +117,7 @@ public class BookingConfirmController {
 				txtDeparture.getText(),
 				txtReturn.getText(),
 				txtBusID.getText(),
-				m_fCosts, m_fFees
+				m_fCosts
 				);
 		try {
 			da.updateDB(sql);

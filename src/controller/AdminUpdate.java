@@ -43,9 +43,9 @@ import services.DataAccess;
 		@FXML
 		private TextField getname = new TextField();
 		@FXML
-		private TextField getaddress = new TextField();
+		private TextField getAddress = new TextField();
 		@FXML
-		private TextField getPhone = new TextField();
+		private TextField getEmail = new TextField();
 
 
 	/*
@@ -56,8 +56,8 @@ import services.DataAccess;
 		AdminController a = new AdminController();
 		this.getname.setText(a.admin_name);
 		getname.setDisable(true);
-		this.getaddress.setText(a.admin_address);
-		this.getPhone.setText(a.admin_phone);
+		this.getAddress.setText(a.admin_address);
+		this.getEmail.setText(a.admin_email);
 	}
 
 
@@ -87,9 +87,9 @@ import services.DataAccess;
 			/*
 			checks if all the fields are filled or not
 			*/
-			if(getname.getText().equals("") == false && getPhone.getText().equals("") == false && getaddress.getText().equals("") == false){
+			if(getname.getText().equals("") == false && getEmail.getText().equals("") == false && getAddress.getText().equals("") == false){
 				
-				String q = "Update admins set phone = '"+getPhone.getText()+"', address ='"+getaddress.getText()+"' where admin_id = "+a.admin_id	;				
+				String q = "Update admins set email = '"+getEmail.getText()+"', address ='"+getAddress.getText()+"' where admin_id = "+a.admin_id	;
 
 				try {
 					da.updateDB(q);
